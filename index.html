@@ -78,6 +78,8 @@ elyoChar[2] = new Array('','e','d','g','f','i','h','k','j','m','l','o','n','q','
 elyoNextTable[2] = new Array(0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2,2);
 
 document.getElementById("input").addEventListener("input", translate);
+document.getElementById("asmo").addEventListener("change", translate);
+document.getElementById("ely").addEventListener("change", translate);
 
 function translate() {
     var tableIndex = 0;
@@ -93,15 +95,28 @@ function translate() {
     //lower case all
 	input = input.toLowerCase();
 
-    for(var i = 0; i < input.length; i++) {
-		if(letterIndex(input.charAt(i)) != 0) {
-			output = output.concat(asmoChar[tableIndex][letterIndex(input.charAt(i))]);
-			tableIndex = asmoNextTable[tableIndex][letterIndex(input.charAt(i))];
-		} else {
-			output = output.concat(input.charAt(i));
-			tableIndex = 0;
-		}
+    if (document.getElementById("asmo").checked) {
+        for(var i = 0; i < input.length; i++) {
+            if(letterIndex(input.charAt(i)) != 0) {
+                output = output.concat(asmoChar[tableIndex][letterIndex(input.charAt(i))]);
+                tableIndex = asmoNextTable[tableIndex][letterIndex(input.charAt(i))];
+            } else {
+                output = output.concat(input.charAt(i));
+                tableIndex = 0;
+            }
+        }
+    } else {
+        for(var i = 0; i < input.length; i++) {
+            if(letterIndex(input.charAt(i)) != 0) {
+                output = output.concat(elyoChar[tableIndex][letterIndex(input.charAt(i))]);
+                tableIndex = elyoNextTable[tableIndex][letterIndex(input.charAt(i))];
+            } else {
+                output = output.concat(input.charAt(i));
+                tableIndex = 0;
+            }
+        }
 	}
+
 
     document.getElementById("output").value = output;
 }
